@@ -120,26 +120,6 @@ const countStart = (countItem) => {
     const valueElementMin = list_elementMin.value;
     const list_elementSec = countItem.querySelector("#userSec");
     const valueElementSec = list_elementSec.value;
-    function countdown(reason){
-        const current = new Date();
-        const count = reason.getTime() - current.getTime();
-        const second = Math.floor(rest/1000) % 60;
-        const minute = Math.floor(rest/1000/60) % 60;
-        const hour = Math.floor(rest/1000/60/60) % 24;
-        const count = [hour, minute, second];
-        return count;
-    };
-    let purpose = new Date();
-    purpose.setFullYear(valueElementYear);
-    purpose.setMonth(valueElementMonth);
-    purpose.setDate(valueElementDate);
-    purpose.setHours(valueElementHour);
-    purpose.setMinutes(valueElementMin);
-    purpose.setSeconds(valueElementSec);
-    function recalc() {
-        const counter = countStart(purpose);
-        const time
-    }
     countItem.innerHTML = `${valueElementYear}年${valueElementMonth}月${valueElementDate}日${valueElementHour}時間${valueElementMin}分${valueElementSec}秒`;
 };
 
