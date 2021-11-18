@@ -15,7 +15,7 @@ const addTasks = (task) => {
     listItem.innerHTML = task;
     countItem.innerHTML =
     `<p class="realtime_countdown">
-      <input type="text" id="userYear" maxlength="2">年<br>
+      <input type="text" id="userYear" maxlength="4">年<br>
       <input type="text" id="userMonth" maxlength="2">月<br>
       <input type="text" id="userDate" maxlength="2">日<br>
       <input type="text" id="userHour" maxlength="2">時<br>
@@ -108,19 +108,28 @@ function refresh() {
 recalc();
 
 const countStart = (countItem) => {
-    const list_elementYear = countItem.querySelector("#userYear");
-    const valueElementYear = list_elementYear.value;
-    const list_elementMonth = countItem.querySelector("#userMonth");
-    const valueElementMonth = list_elementMonth.value;
-    const list_elementDate = countItem.querySelector("#userDate");
-    const valueElementDate = list_elementDate.value;
-    const list_elementHour = countItem.querySelector("#userHour");
-    const valueElementHour = list_elementHour.value;
-    const list_elementMin = countItem.querySelector("#userMin");
-    const valueElementMin = list_elementMin.value;
-    const list_elementSec = countItem.querySelector("#userSec");
-    const valueElementSec = list_elementSec.value;
-    countItem.innerHTML = `${valueElementYear}年${valueElementMonth}月${valueElementDate}日${valueElementHour}時間${valueElementMin}分${valueElementSec}秒`;
+    const listYear = countItem.querySelector("#userYear");
+    const valueYear = listYear.value;
+    const listMonth = countItem.querySelector("#userMonth");
+    const valueMonth = listMonth.value;
+    const listDate = countItem.querySelector("#userDate");
+    const valueDate = listDate.value;
+    const listHour = countItem.querySelector("#userHour");
+    const valueHour = listHour.value;
+    const listMin = countItem.querySelector("#userMin");
+    const valueMin = listMin.value;
+    const listSec = countItem.querySelector("#userSec");
+    const valueSec = listSec.value;
+    let today = new Date();
+    const purpose = new Date(valueYear, valueMonth - 1, valueDate, valueHour, valueMin, valueSec);
+    const object = purpose - today;
+    const objectSec = Math.floor(object/1000) % 60;
+    const objectMin = Math.floor(object/1000/60) % 60;
+    const objectHour = Math.floor(object/1000/60/60) % 24;
+    const objectDate = Math.floor(object/1000/60/60/24) % 30;
+    const objectMonth = Math.floor(object/1000/60/60/24/30) % 12;
+    const objectYear = Math.floor(object/1000/60/60/24/30/12);
+    countItem.innerHTML = `残り時間  ${objectYear}年 ${objectMonth}ヶ月 ${objectDate}日 ${objectHour}時間${objectMin}分${objectSec}秒`
 };
 
 const deleteTasks = (deleteButton) => {
