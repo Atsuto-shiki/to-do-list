@@ -9,6 +9,7 @@ function updata() {
     console.log(data);
     for (let i = 0; i < data.length; i++ ) {
         console.log( data[i] );
+
     };
 };
 setInterval(updata,1000);
@@ -20,41 +21,32 @@ const addTasks = (task) => {
     const showItem = taskList.appendChild(listItem);
     const countItem = document.createElement('div');
     const deleteButton = document.createElement('button');
+    showItem.innerHTML = task;
     showItem.appendChild(countItem);
+    deleteButton.innerHTML = 'Delete';
+    deleteButton.addEventListener('click', evt => {
+        evt.preventDefault();
+        deleteTasks(deleteButton);
+    });
     showItem.appendChild(deleteButton);
-    listItem.innerHTML = task;
-    const got_element = countItem.querySelector("#countButton");
     countItem.innerHTML =
     `<p class="realtime_countdown">
-      <input type="text" id="userYear" maxlength="4"><input type="hidden" id="hydeYear">年<br>
-      <input type="text" id="userMonth" maxlength="2"><input type="hidden" id="hydeMonth">月<br>
-      <input type="text" id="userDate" maxlength="2"><input type="hidden" id="hydeDate">日<br>
-      <input type="text" id="userHour" maxlength="2"><input type="hidden" id="hydeHour">時<br>
-      <input type="text" id="userMin" maxlength="2"><input type="hidden" id="hydeMin">分<br>
-      <input type="text" id="userSec" maxlength="2"><input type="hidden" id="hydeSec">秒<br>
+      <input type="text" id="userYear" maxlength="4">年<br>
+      <input type="text" id="userMonth" maxlength="2">月<br>
+      <input type="text" id="userDate" maxlength="2">日<br>
+      <input type="text" id="userHour" maxlength="2">時<br>
+      <input type="text" id="userMin" maxlength="2">分<br>
+      <input type="text" id="userSec" maxlength="2">秒<br>
       <input type="button" id="countButton" value="上記の日時までカウントダウンする" onclick="showCountdown();">
     </p>`
-    const countButton = got_element;
     countButton.addEventListener('click', evt => {
         evt.preventDefault();
         const listYear = countItem.querySelector("#userYear");
-        const valueYear = listYear.value;
-        document.getElementById("hydeYear").value = valueYear;
         const listMonth = countItem.querySelector("#userMonth");
-        const valueMonth = listMonth.value;
-        document.getElementById("hydeMonth").value = valueMonth;
         const listDate = countItem.querySelector("#userDate");
-        const valueDate = listDate.value;
-        document.getElementById("hydeDate").value = valueDate;
         const listHour = countItem.querySelector("#userHour");
-        const valueHour = listHour.value;
-        document.getElementById("hydeHour").value = valueHour;
         const listMin = countItem.querySelector("#userMin");
-        const valueMin = listMin.value;
-        document.getElementById("hydeMin").value = valueMin;
         const listSec = countItem.querySelector("#userSec");
-        const valueSec = listSec.value;
-        document.getElementById("hydeSec").value = valueSec;
         countItem.id = currentNum;
         data.push({
             id: currentNum,
@@ -67,13 +59,6 @@ const addTasks = (task) => {
         });
         currentNum++;
         countStart(countItem);
-    });
-    listItem.appendChild(countItem);
-    deleteButton.innerHTML = 'Delete';
-    listItem.appendChild(deleteButton);
-    deleteButton.addEventListener('click', evt => {
-        evt.preventDefault();
-        deleteTasks(deleteButton);
     });
 };
 
@@ -137,17 +122,17 @@ function refresh() {
 recalc();
 
 const countStart = (countItem) => {
-    const listYear = countItem.querySelector("#hydeYear");
+    const listYear = countItem.querySelector("#userYear");
     const valueYear = listYear.value;
-    const listMonth = countItem.querySelector("#hydeMonth");
+    const listMonth = countItem.querySelector("#userMonth");
     const valueMonth = listMonth.value;
-    const listDate = countItem.querySelector("#hydeDate");
+    const listDate = countItem.querySelector("#userDate");
     const valueDate = listDate.value;
-    const listHour = countItem.querySelector("#hydeHour");
+    const listHour = countItem.querySelector("#userHour");
     const valueHour = listHour.value;
-    const listMin = countItem.querySelector("#hydeMin");
+    const listMin = countItem.querySelector("#userMin");
     const valueMin = listMin.value;
-    const listSec = countItem.querySelector("#hydeSec");
+    const listSec = countItem.querySelector("#userSec");
     const valueSec = listSec.value;
     let today = new Date();
     const purpose = new Date(valueYear, valueMonth - 1, valueDate, valueHour, valueMin, valueSec);
@@ -160,7 +145,6 @@ const countStart = (countItem) => {
     const objectYear = Math.floor(object/1000/60/60/24/30/12);
     countItem.innerHTML = `残り時間  ${objectYear}年 ${objectMonth}ヶ月 ${objectDate}日 ${objectHour}時間${objectMin}分${objectSec}秒`
 };
-setInterval(countStart, 1000);
 
 
 const deleteTasks = (deleteButton) => {
